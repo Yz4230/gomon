@@ -49,6 +49,7 @@ var logCmd = &cobra.Command{
 			case <-ctx.Done():
 				break loop
 			case <-collectTicker.C:
+				ts := time.Now().UTC().Format(time.RFC3339Nano)
 				links, err := netlink.LinkList()
 				if err != nil {
 					log.Fatalf("failed to list network interfaces: %v", err)
@@ -60,9 +61,9 @@ var logCmd = &cobra.Command{
 						continue
 					}
 					writer.Write([]string{
-						time.Now().UTC().Format(time.RFC3339),
-						attr.Name,
+						ts,
 						fmt.Sprint(attr.Index),
+						attr.Name,
 						fmt.Sprint(stat.RxBytes),
 						fmt.Sprint(stat.TxBytes),
 					})
