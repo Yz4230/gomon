@@ -1,0 +1,12 @@
+version: "3"
+tasks:
+  build:
+    sources:
+      - "**/*.go"
+    generates:
+      - "bin/{{.APP_NAME}}"
+    cmd: "go build -o bin/{{.APP_NAME}}"
+  install:
+    cmd: "go install"
+vars:
+  APP_NAME: "gomon"
