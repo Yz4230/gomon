@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"slices"
+	"syscall"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -40,7 +41,7 @@ var rootCmd = &cobra.Command{
 		writer.Write([]string{"time", "if_idx", "if_name", "rx_bytes", "tx_bytes"})
 		collectTicker := time.NewTicker(interval)
 
-		ctx, stop := signal.NotifyContext(cmd.Context(), os.Interrupt)
+		ctx, stop := signal.NotifyContext(cmd.Context(), syscall.SIGINT, syscall.SIGTERM)
 		defer stop()
 
 	loop:
